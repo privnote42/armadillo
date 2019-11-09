@@ -1,22 +1,4 @@
-# Armadillo - Encrypted Shared Preference
-
-
-<img src="https://github.com/patrickfav/armadillo/blob/master/doc/logo/logo_ldpi.png?raw=true" align="right"
-     alt="Armadillo Logo" width="170" height="207">
-
-A shared preference implementation for secret data providing confidentiality,
-integrity and authenticity . Per default uses AES-GCM, BCrypt and HKDF as cryptographic
-primitives.
-
-[![Download](https://api.bintray.com/packages/patrickfav/maven/armadillo/images/download.svg) ](https://bintray.com/patrickfav/maven/armadillo/_latestVersion)
-[![Build Status](https://travis-ci.org/patrickfav/armadillo.svg?branch=master)](https://travis-ci.org/patrickfav/armadillo)
-[![Javadocs](https://www.javadoc.io/badge/at.favre.lib/armadillo.svg)](https://www.javadoc.io/doc/at.favre.lib/armadillo)
-[![Coverage Status](https://coveralls.io/repos/github/patrickfav/armadillo/badge.svg?branch=master)](https://coveralls.io/github/patrickfav/armadillo?branch=master)
-[![Maintainability](https://api.codeclimate.com/v1/badges/c3ac3cdd849ba47fd90a/maintainability)](https://codeclimate.com/github/patrickfav/armadillo/maintainability)
-
-**Important Notice:** If you migrate to v0.6.0 and use a user password and
-default key stretching function migration is needed due to a security issue.
-See [migration guide in the changelog for v0.6.0](https://github.com/patrickfav/armadillo/releases)
+# PrivNote secure notes based on Armadillo
 
 ## Features
 
@@ -24,81 +6,6 @@ See [migration guide in the changelog for v0.6.0](https://github.com/patrickfav/
 * **Flexible**: Tons of nobs and switches while having sane defaults
 * **Modular**: use your own implementation of symmetric cipher, key stretching, data obfuscation, etc.
 * **Lightweight**: No massive dependencies required like [BouncyCastle](https://www.bouncycastle.org/) or [Facebook Conceal](https://github.com/facebook/conceal)
-
-## Quick Start
-
-Add the following to your dependencies ([add jcenter to your repositories](https://developer.android.com/studio/build/index.html#top-level) if you haven't)
-
-```gradle
-compile 'at.favre.lib:armadillo:x.y.z'
-```
-
-A very minimal example
-
-```java
-    SharedPreferences preferences = Armadillo.create(context, "myPrefs")
-        .encryptionFingerprint(context)
-        .build();
-
-    preferences.edit().putString("key1", "stringValue").commit();
-    String s = preferences.getString("key1", null);
-```
-
-### Advanced Example
-
-The following example shows some of the configurations available to the developer:
-
-```java
-String userId = ...
-SharedPreferences preferences = Armadillo.create(context, "myCustomPreferences")
-        .password("mySuperSecretPassword".toCharArray()) //use user provided password
-        .securityProvider(Security.getProvider("BC")) //use bouncy-castle security provider
-        .keyStretchingFunction(new PBKDF2KeyStretcher()) //use PBKDF2 as user password kdf
-        .contentKeyDigest(Bytes.from(getAndroidId(context)).array()) //use custom content key digest salt
-        .secureRandom(new SecureRandom()) //provide your own secure random for salt/iv generation
-        .encryptionFingerprint(context, userId.getBytes(StandardCharsets.UTF_8)) //add the user id to fingerprint
-        .supportVerifyPassword(true) //enables optional password validation support `.isValidPassword()`
-        .enableKitKatSupport(true) //enable optional kitkat support
-        .enableDerivedPasswordCache(true) //enable caching for derived password making consecutive getters faster
-        .build();
-```
-
-A xml file named like `f1a4e61ffb59c6e6a3d6ceae9a20cb5726aade06.xml` will
-be created with the resulting data looking something like that after the
-first put operation:
-
-```xml
-<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
-<map>
-    <!-- storage random salt -->
-    <string name="585d6f0f415682ace841fb50d5980d60ed23a2ef">riIPjrL2WRfoh8QJXu7fWk4GGeAKlQoJl9ofABHZKlc=</string>
-    <!-- 'key1':'stringValue' -->
-    <string name="152b866fd2d63899678c21f247bb6df0d2e38072">AAAAABD/8an1zfovjJB/2MFOT9ncAAAAJaf+Z9xgzwXzp1BqTsVMnRZxR/HfRcO8lEhyKpL17QmZ5amwAYQ=</string>
-</map>
-
-```
-
-### KitKat Support
-
-Unfortunately [Android SDK 19 (KITKAT)](https://en.wikipedia.org/wiki/Android_KitKat) does not fully support AES GCM mode.
-Therefore a backwards compatible implementation of AES using [CBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_(CBC))
-with [Encrypt-then-MAC](https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_(EtM))
-can be used to support this library on older devices. This should provide
-the same security strength as the GCM version, however the support must
-be enabled manually:
-
-
-```java
-SharedPreferences preferences = Armadillo.create(context, "myCustomPreferences")
-        .enableKitKatSupport(true)
-        ...
-        .build();
-```
-
-In this mode, if on a KitKat device the backwards-compatible implementation is
-used, the default AES-GCM version otherwise. Upgrading to a newer OS version
-the content should still be decryptable, while newer content will then be
-encrypted with the AES-GCM version.
 
 ## Description
 
