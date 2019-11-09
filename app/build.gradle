@@ -10,7 +10,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionNameApp
 
-        applicationId "at.favre.lib.securesharedpreferences"
+        applicationId "de.notes.privNote"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     dataBinding {

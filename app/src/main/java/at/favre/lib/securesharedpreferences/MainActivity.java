@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public void onGetClicked(View view) {
         hideKeyboard(this);
         if (encryptedPreferences == null) {
-            binding.passwordLayout.setError("You have to init Armadillo first!");
+            binding.passwordLayout.setError("You have to init privNote first!");
             return;
         } else if (binding.key.getText() == null || binding.key.getText().toString().isEmpty()) {
             binding.keyLayout.setError("Enter key to retrieve value");
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     public void onSetClicked(View view) {
         hideKeyboard(this);
         if (encryptedPreferences == null) {
-            binding.passwordLayout.setError("You have to init Armadillo first!");
+            binding.passwordLayout.setError("You have to init privNote first!");
             return;
         } else if (binding.key.getText() == null || binding.key.getText().toString().isEmpty()) {
             binding.keyLayout.setError("Enter key to set a value");
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onCloseArmadilloClicked(View view) {
         if (encryptedPreferences == null) {
-            binding.passwordLayout.setError("You have to init Armadillo first!");
+            binding.passwordLayout.setError("You have to init privNote first!");
             return;
         }
         encryptedPreferences.close();
