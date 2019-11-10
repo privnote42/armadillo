@@ -1,1 +1,1 @@
-(short description, max 80 chars)
+very minimal, encrypted notes app

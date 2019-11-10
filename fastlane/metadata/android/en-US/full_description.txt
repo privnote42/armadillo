@@ -1,1 +1,5 @@
-(full app description)
+Very minimal, encrypted notes app. Saved notes are not displayed directly,
+you have to provide your encryption password first.
+The notes are saved key-value based, so you have to know the key too.
+
+More features are planned, like a custom background picture and other things.
