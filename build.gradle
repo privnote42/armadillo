@@ -32,8 +32,8 @@ task clean(type: Delete) {
 ext {
 
     versionNameLib = "1.0"
-    versionNameApp = "$versionNameLib"
-    versionCode = 42
+//    versionNameApp = "$versionNameLib"
+//    versionCode = 42
 
     compileSdkVersion = 29
     buildToolsVersion = "29.0.2"

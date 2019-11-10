@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionNameApp
+        versionCode 44
+        versionName "1.1"
 
         applicationId "de.notes.privNote"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
